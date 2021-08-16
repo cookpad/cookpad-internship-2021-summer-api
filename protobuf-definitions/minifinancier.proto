@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package minifinancier;
+
+import "google/protobuf/timestamp.proto";
+
+service PaymentGateway {
+  // ユーザーに請求を行う
+  rpc Charge(ChargeRequest) returns (Payment);
+}
+
+message ChargeRequest {
+  // 請求対象のユーザー ID
+  uint64 user_id = 1;
+  
+  // 請求金額
+  uint32 amount = 2;
+}
+
+message Payment {
+  // 請求 ID
+  string id = 1;
+
+  // 請求対象のユーザー ID
+  uint64 user_id = 2;
+
+  // 請求金額
+  uint32 amount = 3;
+
+  // 請求の作成時刻
+  google.protobuf.Timestamp create_time = 4;
+}

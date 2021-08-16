@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "path": "minimart"
+    },
+    {
+      "path": "minifinancier"
+    },
+    {
+      "path": "protobuf-definitions"
+    },
+    {
+      "path": "docs"
+    }
+  ],
+  "settings": {
+    "files.associations": {
+      "Schemafile": "ruby"
+    }
+  }
+}

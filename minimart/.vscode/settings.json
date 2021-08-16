@@ -1,0 +1,9 @@
+{
+  // "ruby.format": "rubocop",
+  // "ruby.useBundler": true,
+  "ruby.lint": {
+    "rubocop": {
+      "useBundler": true
+    }
+  }
+}
