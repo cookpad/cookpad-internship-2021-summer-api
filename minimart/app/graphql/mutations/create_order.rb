@@ -1,3 +1,5 @@
+require 'minifinancier_services_pb'
+
 module Mutations
   class CreateOrder < BaseMutation
     field :order, Types::OrderType, null: true
@@ -26,10 +28,23 @@ module Mutations
       order.calculate_total_amount
       order.save!
 
-      payment_id = SecureRandom.uuid
+      payment_id = charge!(user_id: context[:current_user].id, amount: order.total_amount)
 
       order.fix!(minifinancier_payment_id: payment_id, time: Time.zone.now)
 
       { order: order }
     end
+
+    private
+
+    def charge!(user_id:, amount:)
+      payment_gateway_service = Minifinancier::PaymentGateway::Stub.new(
+        ENV.fetch('MINIFINANCIER_HOST', 'localhost:50051'),
+        ENV['ENABLE_GRPC_TLS'] ? GRPC::Core::ChannelCredentials.new : :this_channel_is_insecure,
+      )
+      request = Minifinancier::ChargeRequest.new(user_id: user_id, amount: amount)
+      payment = payment_gateway_service.charge(request)
+      payment.id
+    end
+  end
 end
