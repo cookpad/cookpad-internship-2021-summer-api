@@ -18,4 +18,10 @@ module Types
     def pickup_locations
       PickupLocation.all
     end
+
+    field :products, [Types::ProductType], null: false
+
+    def products
+      Product.all
+    end
 end

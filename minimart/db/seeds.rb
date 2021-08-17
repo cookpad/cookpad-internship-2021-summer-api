@@ -16,3 +16,12 @@ user = User.create!(
   name: 'tomart',
   pickup_location: pickup_location,
 )
+
+30.times do |i|
+  Product.create!(
+    name: "食材#{i + 1}",
+    description: "とてもおいしい食材#{i + 1}",
+    price: 50 * (i + 1),
+    image_path: "/images/products/#{i + 1}.jpg",
+  )
+end
