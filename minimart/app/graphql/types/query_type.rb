@@ -24,4 +24,13 @@ module Types
     def products
       Product.all
     end
+
+    field :product, Types::ProductType, null: true do
+      argument :id, ID, required: true
+    end
+
+    def product(id:)
+      Product.find_by(id: id)
+    end
+  end
 end
