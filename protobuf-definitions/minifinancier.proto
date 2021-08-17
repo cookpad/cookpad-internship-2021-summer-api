@@ -7,12 +7,14 @@ import "google/protobuf/timestamp.proto";
 service PaymentGateway {
   // ユーザーに請求を行う
   rpc Charge(ChargeRequest) returns (Payment);
+  // ヘルスチェック
+  rpc CheckHealth(HealthCheckRequest) returns (Health);
 }
 
 message ChargeRequest {
   // 請求対象のユーザー ID
   uint64 user_id = 1;
-  
+
   // 請求金額
   uint32 amount = 2;
 }
@@ -29,4 +31,16 @@ message Payment {
 
   // 請求の作成時刻
   google.protobuf.Timestamp create_time = 4;
+}
+
+message HealthCheckRequest {}
+
+message Health {
+  enum ServingStatus {
+    UNKNOWN = 0;
+    SERVING = 1;
+    NOT_SERVING = 2;
+    SERVICE_UNKNOWN = 3;
+  }
+  ServingStatus status = 1;
 }

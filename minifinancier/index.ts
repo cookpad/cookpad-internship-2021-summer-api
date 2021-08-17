@@ -6,7 +6,7 @@ import {
   ServerUnaryCall,
 } from "@grpc/grpc-js";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
-import { ChargeRequest, Payment } from "./minifinancier_pb";
+import { ChargeRequest, Payment, HealthCheckRequest, Health } from "./minifinancier_pb";
 import { PaymentGatewayService } from "./minifinancier_grpc_pb";
 
 function charge(
@@ -26,9 +26,16 @@ function charge(
   callback(null, response);
 }
 
-const server = new Server();
-server.addService(PaymentGatewayService, { charge });
+function checkHealth(
+  _call: ServerUnaryCall<HealthCheckRequest, Payment>,
+  callback: sendUnaryData<Health>
+) {
+  const response = new Health().setStatus(1);
+  callback(null, response);
+}
 
+const server = new Server();
+server.addService(PaymentGatewayService, { charge, checkHealth });
 const port = process.env.PORT || 50051;
 server.bindAsync(
   `0.0.0.0:${port}`,

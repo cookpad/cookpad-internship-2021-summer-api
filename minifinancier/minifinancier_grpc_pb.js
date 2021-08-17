@@ -16,6 +16,28 @@ function deserialize_minifinancier_ChargeRequest(buffer_arg) {
   return minifinancier_pb.ChargeRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_minifinancier_Health(arg) {
+  if (!(arg instanceof minifinancier_pb.Health)) {
+    throw new Error('Expected argument of type minifinancier.Health');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_minifinancier_Health(buffer_arg) {
+  return minifinancier_pb.Health.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_minifinancier_HealthCheckRequest(arg) {
+  if (!(arg instanceof minifinancier_pb.HealthCheckRequest)) {
+    throw new Error('Expected argument of type minifinancier.HealthCheckRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_minifinancier_HealthCheckRequest(buffer_arg) {
+  return minifinancier_pb.HealthCheckRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_minifinancier_Payment(arg) {
   if (!(arg instanceof minifinancier_pb.Payment)) {
     throw new Error('Expected argument of type minifinancier.Payment');
@@ -40,6 +62,18 @@ charge: {
     requestDeserialize: deserialize_minifinancier_ChargeRequest,
     responseSerialize: serialize_minifinancier_Payment,
     responseDeserialize: deserialize_minifinancier_Payment,
+  },
+  // ヘルスチェック
+checkHealth: {
+    path: '/minifinancier.PaymentGateway/CheckHealth',
+    requestStream: false,
+    responseStream: false,
+    requestType: minifinancier_pb.HealthCheckRequest,
+    responseType: minifinancier_pb.Health,
+    requestSerialize: serialize_minifinancier_HealthCheckRequest,
+    requestDeserialize: deserialize_minifinancier_HealthCheckRequest,
+    responseSerialize: serialize_minifinancier_Health,
+    responseDeserialize: deserialize_minifinancier_Health,
   },
 };
 
