@@ -12,4 +12,10 @@ module Types
     def viewer
       context[:current_user]
     end
+
+    field :pickup_locations, [Types::PickupLocationType], null: false
+
+    def pickup_locations
+      PickupLocation.all
+    end
 end
