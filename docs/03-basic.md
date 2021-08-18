@@ -51,7 +51,6 @@ type User {
 type PickupLocation {
   id: ID!
   name: String!
-  description: String!
 }
 
 # 商品
