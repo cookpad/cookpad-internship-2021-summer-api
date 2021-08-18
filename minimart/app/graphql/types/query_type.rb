@@ -10,7 +10,7 @@ module Types
     field :pickup_locations, [Types::PickupLocationType], null: false
     field :products, [Types::ProductType], null: false
     field :product, Types::ProductType, null: true do
-      argument :id, ID, required: true
+      argument :id, ID, required: false
     end
 
     def viewer
