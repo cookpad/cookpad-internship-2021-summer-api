@@ -22,3 +22,8 @@ create_table :products do |t|
 
   t.timestamps
 end
+
+create_table :orders do |t|
+  t.belongs_to :products, foreign_key: true
+  t.integer :quantity, null: false
+end
