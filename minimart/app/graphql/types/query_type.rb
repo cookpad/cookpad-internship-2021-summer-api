@@ -7,16 +7,20 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
     field :viewer, Types::UserType, null: true
+    field :pickup_locations, [Types::PickupLocationType], null: false
+    field :products, [Types::ProductType], null: false
 
     def viewer 
       context[:current_user]
     end
-
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
+    def pickup_locations 
+      PickupLocation.all
     end
+
+    def products
+      Product.all
+    end
+
+
   end
 end
