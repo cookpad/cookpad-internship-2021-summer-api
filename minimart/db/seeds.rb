@@ -16,3 +16,11 @@ user = User.create!(
   name: 'tomart',
   pickup_location: pickup_location,
 )
+
+10.times do |i|
+  Product.create(
+    name: "Product #{i}",
+    description: "#{i} product",
+    price: 100
+  )
+end
