@@ -1,13 +1,7 @@
 module Types
   class MutationType < Types::BaseObject
-    field :update_pickup_location, mutation: Mutations::UpdatePickupLocation
+    field :update_pickup_location, mutation: Mutations::UpdatePickupLocation, description: "ユーザー自身のデフォルトの受け取り場所を変更する"
 
-    # TODO: remove me
-    # field :test_field, String, null: false,
-    #   description: "An example field added by the generator"
-    # def test_field
-    #   "Hello World"
-    # end
 
   end
 end
