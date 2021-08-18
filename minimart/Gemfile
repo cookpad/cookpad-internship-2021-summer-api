@@ -14,6 +14,7 @@ gem 'puma', '~> 5.0'
 # gem 'rack-cors'
 
 gem 'graphql'
+gem 'graphql'
 gem 'grpc'
 gem 'ridgepole', require: false
 
