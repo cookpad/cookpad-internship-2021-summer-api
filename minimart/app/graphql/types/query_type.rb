@@ -8,6 +8,7 @@ module Types
     # They will be entry points for queries on your schema.
     field :viewer, Types::UserType, null: true, description: "リクエストしたユーザー自身を返す"
     field :pickup_locations, [Types::PickupLocationType], null: false, description: "全ての受け取り場所を返す"
+    field :products, [Types::ProductType], null: false, description: "全ての商品を返す"
 
     def viewer
       context[:current_user]
@@ -15,6 +16,10 @@ module Types
 
     def pickup_locations
       PickupLocation.all
+    end
+
+    def products
+      Product.all
     end
 
   end
