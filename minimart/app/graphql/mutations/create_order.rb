@@ -20,12 +20,7 @@ module Mutations
         delivery_date: Date.tomorrow + 12.hours,
         total_amount: total_amount
       )
-      items_json = []
       items.each do |item|
-        items_json.push({
-          product: Product.find_by(id: item[:product_id]),
-          quantity: item[:quantity]
-        })
         ProductOrder.create!(order: order, product: Product.find_by(id: item[:product_id]), product_count: item[:quantity])
       end
       if order
