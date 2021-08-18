@@ -18,8 +18,15 @@ module Types
       PickupLocation.all
     end
 
+    
     def products
       Product.all
+    end
+
+    field :product, Types::ProductType, null:true do argument :product_id,ID,required:true 
+    end
+    def product(product_id:)
+      Product.find_by(id: product_id)
     end
   
     # TODO: remove me
