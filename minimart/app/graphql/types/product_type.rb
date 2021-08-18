@@ -4,6 +4,6 @@ module Types
     field :name, String, null: false
     field :description, String, null: false
     field :price, Integer, null: false
-    field :imageUrl, String, null: false
+    field :image_url, String, null: false
   end
 end

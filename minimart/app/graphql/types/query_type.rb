@@ -9,6 +9,7 @@ module Types
     field :viewer, Types::UserType, null: true
     field :pickup_locations, [Types::PickupLocationType], null: false
     field :products, [Types::ProductType], null: false
+
     field :product, Types::ProductType, null: false do
       argument :id, ID, required: true
     end
@@ -22,11 +23,21 @@ module Types
     end
 
     def products
-      Product.all
+      products = Product.all
+      products.each do |product|
+        product.image_url = set_image_url(product)
+      end
+      products
     end
 
     def product(id:)
-      Product.find_by(id: id)
+      product = Product.find_by(id: id)
+      product.image_url = set_image_url(product)
+      product
+    end
+
+    def set_image_url(product)
+      File.join(context[:image_base_url], product.image_url)
     end
   end
 end
