@@ -20,3 +20,18 @@ create_table :products do |t|
   t.string :image_url, null: false
   t.timestamps
 end
+
+create_table :order_items do |t|
+  t.belongs_to :order, null: false, foreign_key: true
+  t.belongs_to :product, null: false, foreign_key: true
+  t.integer :quantity, null: false, limit: 2, unsigned: true
+  t.timestamps
+end
+
+create_table :orders do |t|
+  t.belongs_to :user, null: false, foreign_key:true
+  t.belongs_to :pickup_location, bnull: false, foreign_key:true
+  t.integer :total_amount, null: false
+  t.datetime :ordered_at
+  t.datetime :delivery_date
+end

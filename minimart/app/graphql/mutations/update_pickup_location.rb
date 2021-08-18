@@ -1,6 +1,7 @@
 module Mutations
   class UpdatePickupLocation < BaseMutation
-    field :pickup_location, Types::PickupLocationType, null: true
+    #戻り値(clientMutationIdは自動的に追加)
+    field :pickup_location, Types::PickupLocationType, null: true 
 
     argument :pickup_location_id, ID, required: true # 引数
 
