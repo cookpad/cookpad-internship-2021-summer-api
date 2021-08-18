@@ -12,3 +12,29 @@ create_table :users do |t|
 
   t.index :name, unique: true
 end
+
+create_table :products do |t|
+  t.string :name, null: false
+  t.text :description, null: false
+  t.integer :price, null: false
+  t.text :image_url, null: false
+
+  t.timestamps
+end
+
+create_table :order_items do |t|
+  t.belongs_to :product, foreign_key: true
+  t.integer :quantity, null: false
+
+  t.timestamps
+end
+
+create_table :orders do |t|
+  t.belongs_to :user, foreign_key: true
+  t.belongs_to :pickup_location, foreign_key: true
+  t.integer :total_amount, null: false
+  t.datetime :ordered_at, default: -> { "now()" }, null: false
+  t.datetime :delivery_date, null: false
+
+  t.timestamps
+end
