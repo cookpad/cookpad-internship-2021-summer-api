@@ -14,9 +14,16 @@ module Types
   
 
     def products
-      Product.all
+      products = Product.all.map do |product|
+        product.image_url = image_url(product.image_url)
+        product
+      end
+      products
     end
     
+    def image_url(image_url)
+      File.join(context[:image_base_url], "/images/products/#{image_url}")
+    end
 
 
     def viewer
