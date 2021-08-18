@@ -12,6 +12,12 @@ module Types
       context[:current_user]
     end
 
+    field :pickup_locations, [Types::PickupLocationType], null: false
+
+    def pickup_locations
+      PickupLocation.all
+    end
+
     # TODO: remove me
     field :test_field, String, null: false,
       description: "An example field added by the generator"
