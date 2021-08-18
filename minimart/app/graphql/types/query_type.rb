@@ -14,7 +14,12 @@ module Types
     end
 
     def product(id:)
-      Product.find_by(id: id)
+      target_product = Product.find_by(id: id)
+      if target_product
+        return target_product
+      else
+        raise GraphQL::ExecutionError, "存在しない商品です"
+      end
     end
 
     def viewer 

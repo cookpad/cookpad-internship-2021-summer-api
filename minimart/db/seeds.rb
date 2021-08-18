@@ -18,9 +18,14 @@ user = User.create!(
 )
 
 10.times do |i| 
-  Product.create(
+  newProduct = Product.create(
     name: "商品#{i}",
     description: "#{i}番目の商品です",
     price: (i + 1) * 100
+  )
+  OrderItem.create!(
+    product: newProduct,
+    #product_id: newProduct.id,
+    quantity: (i+1)
   )
 end
