@@ -16,3 +16,17 @@ user = User.create!(
   name: 'tomart',
   pickup_location: pickup_location,
 )
+
+product = Product.create!(
+  name: 'トマト',
+  description: '赤いおいしいトマト',
+  price: 100,
+  imageUrl: "testImageUrl"
+)
+product = Product.create!(
+  name: "オクラ",
+  description: "緑のねばねばオクラ",
+  price: 150,
+  imageUrl: "testImageUrl2"
+)
+
