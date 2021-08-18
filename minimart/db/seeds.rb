@@ -16,3 +16,5 @@ user = User.create!(
   name: 'tomart',
   pickup_location: pickup_location,
 )
+
+product = Product.create!(name: "トマト", description: "新鮮なトマト", price: 100, imageUrl: "")
