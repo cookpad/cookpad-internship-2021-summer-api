@@ -21,9 +21,6 @@ module Types
     field :products, [Types::ProductType], null: false
 
     def products
-      # image_url = 'aaa'
-      # products = Product.all.join(context[:image_base_url], image_url)
-      # puts products
       Product.all
     end
 
