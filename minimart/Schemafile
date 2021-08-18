@@ -30,7 +30,7 @@ end
 
 create_table :orders do |t|
   t.belongs_to :user, null: false, foreign_key:true
-  t.belongs_to :pickup_location, bnull: false, foreign_key:true
+  t.belongs_to :pickup_location, null: false, foreign_key:true
   t.integer :total_amount, null: false
   t.datetime :ordered_at
   t.datetime :delivery_date
