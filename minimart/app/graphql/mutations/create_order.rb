@@ -11,7 +11,7 @@ module Mutations
       order = Order.new(
         user: context[:current_user],
         pickup_location_id: pickup_location_id || context[:current_user].pickup_location.id,
-        delivery_date: Time.current.tomorrow
+        delivery_date: Order.calc_delivery_date
       )
 
       total_amount = 0
