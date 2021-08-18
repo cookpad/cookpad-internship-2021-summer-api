@@ -1,3 +1,5 @@
+require 'minifinancier_services_pb'
+
 module Mutations
   class CreateOrder < BaseMutation
     field :order, Types::OrderType, null: true
@@ -21,6 +23,15 @@ module Mutations
 
       order.total_amount = total_amount
       order.save
+
+      service = Minifinancier::PaymentGateway::Stub.new(
+        'localhost:50051',
+        :this_channel_is_insecure,
+      )
+
+      service.charge(
+        Minifinancier::ChargeRequest.new(user_id: context[:current_user].id, amount: total_amount),
+      )
 
       { order: order }
     end

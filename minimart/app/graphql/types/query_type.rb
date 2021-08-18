@@ -26,7 +26,7 @@ module Types
     end
 
     def product(id:)
-      Product.find(id)
+      Product.find_by(id: id)
     end
 
     # TODO: remove me
