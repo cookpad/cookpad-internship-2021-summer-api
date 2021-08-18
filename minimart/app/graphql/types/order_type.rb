@@ -1,3 +1,5 @@
+require 'date'
+
 module Types
   class OrderType < Types::BaseObject
     field :id, ID, null: false
@@ -11,7 +13,17 @@ module Types
     end
 
     field :total_amount, Integer, null: false
-    field :orderedAt, GraphQL::Types::ISO8601DateTime, null: false
-    field :deliveryDate, GraphQL::Types::ISO8601DateTime, null: false
+
+    field :orderedAt, GraphQL::Types::ISO8601DateTime, null: true
+    def orderedAt
+      object.created_at
+    end
+
+    field :deliveryDate, GraphQL::Types::ISO8601DateTime, null: true
+    def deliveryDate
+      delivery_date = object.created_at
+      delivery_date += 1.days
+      DateTime.parse(delivery_date.strftime("%Y-%m-%d 12:00:00 +0900"))
+    end
   end
 end

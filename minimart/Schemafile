@@ -24,6 +24,8 @@ create_table :orders do |t|
   t.references :user, null: false
   t.references :pickup_location, null: false
   t.integer :total_amount, null: false
+
+  t.timestamps
 end
 
 create_table :order_items do |t|
