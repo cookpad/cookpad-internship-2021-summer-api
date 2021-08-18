@@ -12,6 +12,32 @@ module Types
     def viewer
       context[:current_user]
     end
+
+    field :pickup_locations, [Types::PickupLocationType], null: false
+
+    def pickup_locations
+      PickupLocation.all
+    end
+
+    field :products, [Types::ProductType], null: false
+
+    def products
+      Product.all
+    end
+
+    field :product, Types::ProductType, null: true do
+      argument :product_id, ID, required: true
+    end
+
+    def product(product_id:)
+      res = Product.find(product_id)
+      if res
+        res
+      else
+        nil
+      end
+    end
+
     # TODO: remove me
     field :test_field, String, null: false,
       description: "An example field added by the generator"

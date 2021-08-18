@@ -10,9 +10,15 @@ pickup_location = PickupLocation.create!(name: 'WeWork みなとみらい')
 
 9.times do |i|
   PickupLocation.create!(name: "受け取り場所 #{i}")
+  Product.create!(
+    name: "product #{i}",
+    description: "description #{i}",
+    price: 100*i,
+    imageUrl: "hoge"
+  )
 end
 
 user = User.create!(
-  name: 'tomart',
+  name: 'Naoki08',
   pickup_location: pickup_location,
 )
