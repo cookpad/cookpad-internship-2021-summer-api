@@ -7,6 +7,7 @@ import "google/protobuf/timestamp.proto";
 service PaymentGateway {
   // ユーザーに請求を行う
   rpc Charge(ChargeRequest) returns (Payment);
+  rpc Refund(RefundRequest) returns (Payment);
 }
 
 message ChargeRequest {
@@ -15,6 +16,10 @@ message ChargeRequest {
   
   // 請求金額
   uint32 amount = 2;
+}
+
+message RefundRequest {
+  string payment_id = 1;
 }
 
 message Payment {
@@ -29,4 +34,7 @@ message Payment {
 
   // 請求の作成時刻
   google.protobuf.Timestamp create_time = 4;
+
+  // 返金したか
+  bool is_refunded = 5;
 }
