@@ -1,21 +1,22 @@
 module Mutations
   class CreateOrder < BaseMutation
-    field :order, Types::OrderType, null: true
+    field :order, Types::OrderType, null: false
 
-    argument :items, [OrderItemType], required: true
-    argument :pickup_location_id, ID
+    argument :items, [Types::OrderItemInputType], required: true
+    argument :pickup_location_id, ID, required: false
 
-    def resolve()
-    end  
-    # TODO: define return fields
-    # field :post, Types::PostType, null: false
-
-    # TODO: define arguments
-    # argument :name, String, required: true
-
-    # TODO: define resolve method
-    # def resolve(name:)
-    #   { post: ... }
-    # end
+    def resolve(items:, pickup_location_id:)
+      user = context[:current_user]
+      total_amount = 0
+      items.each do |item|
+        puts Product.find_by(id: item.product_id).price
+        total_amount += Product.find_by(id: item.product_id).price * item.quantity
+      end
+      pickup_location_id ||= user.pickup_location_id
+      ordered_at = Date.today
+      delivery_date = Date.today + 1
+      { user: user.id, pickup_location: pickup_location_id, total_amount: total_amount,
+        ordered_at: ordered_at, delivery_date: delivery_date }
+    end
   end
 end
