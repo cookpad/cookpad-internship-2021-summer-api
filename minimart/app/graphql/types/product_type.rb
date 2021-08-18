@@ -7,5 +7,10 @@ module Types
     field :image_url, String, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
+    
+    def image_url # リゾルバ
+      image_path = "/images/products/1.jpg"
+      File.join(context[:image_base_url], image_path)
+    end
   end
 end
