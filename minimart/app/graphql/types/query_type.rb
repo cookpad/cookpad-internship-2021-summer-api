@@ -26,7 +26,11 @@ module Types
       argument :id, ID, required: true
     end
     def product(id:)
-      Product.find(id)
+      if product = Product.find_by(id: id)
+        product
+      else
+        nil
+      end
     end
 
     # TODO: remove me
