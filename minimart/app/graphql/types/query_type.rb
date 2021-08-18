@@ -12,14 +12,21 @@ module Types
       context[:current_user]
     end
 
-    field :pickupLocations, [Types::PickupLocationType], null: true
+    field :pickupLocations, [Types::PickupLocationType], null: false
     def pickupLocations
       PickupLocation.all
     end
 
-    field :products, [Types::ProductType], null: true
+    field :products, [Types::ProductType], null: false
     def products
       Product.all
+    end
+
+    field :product, Types::ProductType, null: true do
+      argument :id, ID, required: true
+    end
+    def product(id:)
+      Product.find(id)
     end
 
     # TODO: remove me
