@@ -6,10 +6,9 @@ module Mutations
 
     def resolve(pickup_location_id:)
       pickup_location = PickupLocation.find_by(id: pickup_location_id)
-      if pickup_location.nil?
+      if pickup_location.nil? || context[:current_user].nil?
         raise GraphQL::ExecutionError, pickup_location.errors.full_messages.join(", ")
       end
-
       context[:current_user].update(pickup_location: pickup_location)
       { pickup_location: pickup_location }
     end
