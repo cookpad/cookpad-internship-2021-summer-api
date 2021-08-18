@@ -15,6 +15,7 @@ gem 'puma', '~> 5.0'
 
 gem 'graphql'
 gem 'grpc'
+gem 'graphql_playground-rails'
 gem 'ridgepole', require: false
 
 group :development, :test do
