@@ -23,3 +23,23 @@ create_table :products do |t|
 
   t.index :name, unique: true
 end
+
+create_table :orders do |t|
+  t.belongs_to :user, foreign_key: true
+  t.belongs_to :pickup_location, foreign_key: true
+
+  t.integer :total_amount, null: false
+  t.datetime :ordered_at, null: false
+  t.datetime :delivery_date, null: false
+
+  t.timestamps
+end
+
+create_table :product_orders do |t|
+  t.belongs_to :product, foreign_key: true
+  t.belongs_to :order, foreign_key: true
+
+  t.integer :product_count, null: false, default: 0
+
+  t.timestamps
+end

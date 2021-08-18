@@ -23,6 +23,6 @@ user = User.create!(
     name: "商品#{num}",
     description: "説明#{num}",
     price: 100+num,
-    image_url: "#{num}.png"
+    image_url: "#{num}.jpg"
   )
 end
