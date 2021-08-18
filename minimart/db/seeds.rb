@@ -12,6 +12,16 @@ pickup_location = PickupLocation.create!(name: 'WeWork みなとみらい')
   PickupLocation.create!(name: "受け取り場所 #{i}")
 end
 
+10.times do |i|
+  Product.create!(
+    name:"オクラ",
+    description:"夏バテ防止にネバネバパワーの新鮮オクラをご賞味ください。Mサイズ中心の食べ易い大きさです。グリの野菜は鮮度が生命、オクラのウブ毛を体験して下さい。",
+    price:165,
+    image_url:"https://minimart-api.s3.ap-northeast-1.amazonaws.com/images/products/1.jpg",
+  )
+end
+
+
 user = User.create!(
   name: 'tomart',
   pickup_location: pickup_location,
