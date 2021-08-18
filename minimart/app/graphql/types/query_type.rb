@@ -9,6 +9,14 @@ module Types
     field :viewer, Types::UserType, null: true
     
     field :pickupLocations, [Types::PickupLocationType], null: false
+    
+   field :products, [Types::ProductType], null: true
+
+    def products
+      Product.all
+    end
+    
+
 
     def viewer
       context[:current_user]
@@ -17,6 +25,8 @@ module Types
     def pickupLocations
       PickupLocation.all
     end
+
+
 
   end
 end

@@ -12,3 +12,15 @@ create_table :users do |t|
 
   t.index :name, unique: true
 end
+
+
+create_table :products do |t|
+  t.string :name, null: false
+  t.text :description, null: false
+  t.integer :price, null: false
+  t.text :image_url,null: false
+
+  t.timestamps
+
+  t.index :name, unique: true
+end
