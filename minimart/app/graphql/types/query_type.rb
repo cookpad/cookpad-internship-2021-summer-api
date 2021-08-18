@@ -9,6 +9,13 @@ module Types
     field :viewer, Types::UserType, null: true
     field :pickup_locations, [Types::PickupLocationType], null: false
     field :products, [Types::ProductType], null: false
+    field :product, Types::ProductType, null: true do
+      argument :id, ID, required: true
+    end
+
+    def product(id:)
+      Product.find_by(id: id)
+    end
 
     def viewer 
       context[:current_user]
