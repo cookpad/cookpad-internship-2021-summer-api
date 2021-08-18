@@ -14,7 +14,7 @@ services:
     build:
       context: '../minifinancier'
     ports:
-      - '50051:50051'
+      - '50052:50051'
 
 volumes:
   mysql-data:
