@@ -18,6 +18,24 @@ create_table :products do |t|
   t.string :description
   t.integer :price, null: false
   t.string :imageUrl
-  
+
+  t.timestamps
+end
+
+create_table :orders do |t|
+  t.belongs_to :user, foreign_key: true, null: false
+  t.belongs_to :pickup_location, foreign_key: true, null: false
+  t.integer :total_amount, null: false
+  t.datetime :ordered_at
+  t.datetime :delivery_date
+
+  t.timestamps
+end
+
+create_table :order_items do |t|
+  t.belongs_to :product, foreign_key: true, null: false
+  t.integer :quantity, null: false
+  t.belongs_to :order, foreign_key: true, null: false
+
   t.timestamps
 end
