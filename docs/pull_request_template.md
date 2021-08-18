@@ -12,7 +12,7 @@
   - [ ] 内部で注文データを作成する
   - [ ] minifinancier の rpc `Charge` を呼ぶ
 
-### 応用課題
+### 発展課題
 
 - [ ] 商品の name と description を対象とした検索機能
 - [ ] 商品カテゴリ
