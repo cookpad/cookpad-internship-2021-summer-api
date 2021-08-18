@@ -1,6 +1,5 @@
 create_table :pickup_locations do |t|
   t.string :name, null: false
-  t.belongs_to :order, null: false
 
   t.timestamps
 end
@@ -26,15 +25,16 @@ end
 create_table :order_items do |t|
   t.belongs_to :product, foreign_key: true
   t.integer :quantity, null: false
-  t.belongs_to :orders
+  t.belongs_to :order, null: false
   
   t.timestamps
 end
 
 create_table :orders do |t|
   t.belongs_to :user, foreign_key: true
-  t.integer :total_amountm, null: false
-  t.datetime :orderd_at, null: false
+  t.belongs_to :pickup_location, foreign_key: true
+  t.integer :total_amount, null: false
+  t.datetime :ordered_at, null: false
   t.datetime :delivery_date, null: false
 
   t.timestamps
