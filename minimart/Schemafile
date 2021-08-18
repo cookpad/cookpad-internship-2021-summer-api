@@ -24,3 +24,11 @@ create_table :order_items do |t|
   t.integer :quantity, null: false
   t.belongs_to :order, foreign_key: true, null: false
 end
+
+create_table :orders do |t|
+  t.belongs_to :user, foreign_key: true, null:false
+  t.belongs_to :pickup_location, foreign_key: true, null:false
+  t.integer :totalamount, null: false
+  t.ISO8601DateTime :ordered_at, null: false
+  t.ISO8601DateTime :delivery_date, null: false
+end
