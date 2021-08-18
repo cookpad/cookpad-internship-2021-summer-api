@@ -16,3 +16,20 @@ user = User.create!(
   name: 'tomart',
   pickup_location: pickup_location,
 )
+
+[5, 10, 15].each_with_index do |name, i|
+end
+
+
+9.times do |i|
+  newPro = Product.create!(
+    name: "#{i}ですよ",
+    description: "#{i}番目ですね",
+    price: 10*i,
+    image_url: ""
+  )
+  OrderItem.create!(
+    products: newPro,
+    quantity: 10
+  )
+end
