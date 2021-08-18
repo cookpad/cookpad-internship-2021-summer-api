@@ -21,3 +21,17 @@ create_table :products do |t|
 
   t.timestamps
 end
+
+create_table :orders do |t|
+  t.belongs_to :user, foreign_key:true
+  t.string :pickup_location, null: false
+  t.string :ordered_at, null: false
+  t.string :delivery_date, null: false
+end
+
+create_table :order_items do |t|
+  t.belongs_to :order, foreign_key: true
+  t.string :product_id, null: false
+  t.integer :quantity, null: false
+end
+
