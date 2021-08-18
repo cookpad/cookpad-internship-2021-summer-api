@@ -42,6 +42,8 @@ module Types
     def product(id:)
       if Product.find_by(id: id)
         product = Product.find_by(id: id)
+        product.image_url = image_url(product.image_url)
+        product
       else
         raise GraphQL::ExecutionError, "Product id #{id} is not found"
       end
