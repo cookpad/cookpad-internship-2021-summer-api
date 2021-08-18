@@ -27,6 +27,17 @@ function deserialize_minifinancier_Payment(buffer_arg) {
   return minifinancier_pb.Payment.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_minifinancier_RefundRequest(arg) {
+  if (!(arg instanceof minifinancier_pb.RefundRequest)) {
+    throw new Error('Expected argument of type minifinancier.RefundRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_minifinancier_RefundRequest(buffer_arg) {
+  return minifinancier_pb.RefundRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 
 var PaymentGatewayService = exports.PaymentGatewayService = {
   // ユーザーに請求を行う
@@ -38,6 +49,17 @@ charge: {
     responseType: minifinancier_pb.Payment,
     requestSerialize: serialize_minifinancier_ChargeRequest,
     requestDeserialize: deserialize_minifinancier_ChargeRequest,
+    responseSerialize: serialize_minifinancier_Payment,
+    responseDeserialize: deserialize_minifinancier_Payment,
+  },
+  refund: {
+    path: '/minifinancier.PaymentGateway/Refund',
+    requestStream: false,
+    responseStream: false,
+    requestType: minifinancier_pb.RefundRequest,
+    responseType: minifinancier_pb.Payment,
+    requestSerialize: serialize_minifinancier_RefundRequest,
+    requestDeserialize: deserialize_minifinancier_RefundRequest,
     responseSerialize: serialize_minifinancier_Payment,
     responseDeserialize: deserialize_minifinancier_Payment,
   },

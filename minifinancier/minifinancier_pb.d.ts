@@ -30,6 +30,26 @@ export namespace ChargeRequest {
     }
 }
 
+export class RefundRequest extends jspb.Message { 
+    getPaymentId(): string;
+    setPaymentId(value: string): RefundRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): RefundRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: RefundRequest): RefundRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: RefundRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): RefundRequest;
+    static deserializeBinaryFromReader(message: RefundRequest, reader: jspb.BinaryReader): RefundRequest;
+}
+
+export namespace RefundRequest {
+    export type AsObject = {
+        paymentId: string,
+    }
+}
+
 export class Payment extends jspb.Message { 
     getId(): string;
     setId(value: string): Payment;
@@ -42,6 +62,8 @@ export class Payment extends jspb.Message {
     clearCreateTime(): void;
     getCreateTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
     setCreateTime(value?: google_protobuf_timestamp_pb.Timestamp): Payment;
+    getIsRefunded(): boolean;
+    setIsRefunded(value: boolean): Payment;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Payment.AsObject;
@@ -59,5 +81,6 @@ export namespace Payment {
         userId: number,
         amount: number,
         createTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        isRefunded: boolean,
     }
 }
