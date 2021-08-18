@@ -11,6 +11,7 @@ module Types
     field :pickupLocations, [Types::PickupLocationType], null: false
     
    field :products, [Types::ProductType], null: true
+  
 
     def products
       Product.all
@@ -24,6 +25,19 @@ module Types
     
     def pickupLocations
       PickupLocation.all
+    end
+
+
+    field :product, Types::ProductType, null: false do
+      argument :id, ID, required: true
+    end
+
+    def product(id:)
+      if Product.find_by(id: id)
+        product = Product.find_by(id: id)
+      else
+        raise GraphQL::ExecutionError, "Product id #{id} is not found"
+      end
     end
 
 
