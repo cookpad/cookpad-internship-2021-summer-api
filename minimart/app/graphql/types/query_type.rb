@@ -20,5 +20,26 @@ module Types
       context[:current_user]
     end
 
+    field :products, [Types::ProductType], null: false
+
+    def products
+      Product.all
+    end
+
+    field :product,Types::ProductType, null: false do
+          argument :id, Int, required: true
+    end
+
+    def product(id:)
+      Product.find_by!(id: id)
+    end
+
+    field :pickup_locations, [Types::PickupLocationType], null: false
+
+    def pickup_locations
+      PickupLocation.all
+    end
+
+
   end
 end

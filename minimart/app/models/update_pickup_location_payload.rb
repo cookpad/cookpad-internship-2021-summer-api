@@ -1,0 +1,3 @@
+class UpdatePickupLocationPayload < ApplicationRecord
+end
+

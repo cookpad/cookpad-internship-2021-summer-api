@@ -1,14 +1,43 @@
 create_table :pickup_locations do |t|
   t.string :name, null: false
-
+  t.string :description, null: false
   t.timestamps
 end
+
+create_table :products do |t|
+  t.string :name, null: false
+  t.string :description, null: false
+  t.integer :price, null: false
+  t.string :imageUrl, null: false
+  t.timestamps
+end
+
+create_table :orders do |t|
+    t.belongs_to :user, foreign_key: true
+    t.belongs_to :pickup_location, foreign_key: true
+    t.integer :total_amount, null: false
+    t.datetime :order_at, null:false
+    t.datetime :delivery_date, null:false
+end
+
+create_table :order_items do |t|
+    t.belongs_to :product, foreign_key: true
+    t.integer :quantity
+end
+
+create_table :update_pickup_location_payloads do |t|
+    t.string :client_mutation_id
+    t.belongs_to :pickup_location, foreign_key: true
+end
+
+create_table :create_order_payloads do |t|
+    t.string :client_mutation_id
+    t.belongs_to :order, foreign_key: true
+end
+
 
 create_table :users do |t|
   t.belongs_to :pickup_location, foreign_key: true
   t.string :name, null: false
-
-  t.timestamps
-
   t.index :name, unique: true
 end

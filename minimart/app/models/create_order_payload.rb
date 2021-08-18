@@ -1,0 +1,2 @@
+class CreateOrderPayload < ApplicationRecord
+end
