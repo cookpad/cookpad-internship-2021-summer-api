@@ -7,9 +7,14 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
     field :viewer, Types::UserType, null: true
+    field :pickup_locations, [Types::PickupLocationType], null: false
 
     def viewer
       context[:current_user]
+    end
+
+    def pickup_locations
+      PickupLocation.all
     end
 
     # TODO: remove me
