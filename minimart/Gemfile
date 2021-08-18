@@ -17,6 +17,7 @@ gem 'grpc'
 gem 'ridgepole', require: false
 
 gem 'graphql'
+gem 'graphql_playground-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
