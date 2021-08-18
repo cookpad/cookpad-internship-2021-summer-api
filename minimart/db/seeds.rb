@@ -16,3 +16,6 @@ user = User.create!(
   name: 'tomart',
   pickup_location: pickup_location,
 )
+
+Product.create!(name: "にんじん", description: "オレンジ色の野菜", price: 50, image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Mrkva.JPG/1024px-Mrkva.JPG")
+Product.create!(name: "大根", description: "白色の野菜", price: 60, image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Daikon.Japan.jpg/200px-Daikon.Japan.jpg")

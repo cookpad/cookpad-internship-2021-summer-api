@@ -17,6 +17,11 @@ module Types
       PickupLocation.all
     end
 
+    field :products, [Types::ProductType], null: true
+    def products
+      Product.all
+    end
+
     # TODO: remove me
     field :test_field, String, null: false,
       description: "An example field added by the generator"
