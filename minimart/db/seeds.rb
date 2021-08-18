@@ -16,3 +16,10 @@ user = User.create!(
   name: 'tomart',
   pickup_location: pickup_location,
 )
+
+product = Product.create!(
+  name: 'オクラ',
+  description: 'test',
+  price: 100,
+  image_url: 'test.com'
+)
