@@ -16,6 +16,10 @@ module Minifinancier
 
       # ユーザーに請求を行う
       rpc :Charge, ::Minifinancier::ChargeRequest, ::Minifinancier::Payment
+      # 引数の請求に対して返金を行う
+      rpc :Refund, ::Minifinancier::RefundRequest, ::Minifinancier::Payment
+      # ヘルスチェック
+      rpc :CheckHealth, ::Minifinancier::HealthCheckRequest, ::Minifinancier::Health
     end
 
     Stub = Service.rpc_stub_class

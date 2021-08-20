@@ -11,6 +11,13 @@ class MinifinancierClient
     payment_gateway_service.charge(request)
   end
 
+  def refund(payment_id)
+    request = Minifinancier::RefundRequest.new(payment_id: payment_id)
+    payment_gateway_service.refund(request)
+  rescue GRPC::NotFound
+    nil
+  end
+
   private
 
   def payment_gateway_service

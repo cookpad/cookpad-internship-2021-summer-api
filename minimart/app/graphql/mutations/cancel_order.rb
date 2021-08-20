@@ -16,7 +16,15 @@ module Mutations
         raise GraphQL::ExecutionError, e.message
       end
 
+      minifinancier_client.refund(order.minifinancier_payment_id)
+
       { order: order }
+    end
+
+    private
+
+    def minifinancier_client
+      Rails.configuration.x.minifinancier_client
     end
   end
 end

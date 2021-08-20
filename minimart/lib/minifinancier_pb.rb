@@ -6,20 +6,39 @@ require 'google/protobuf'
 require 'google/protobuf/timestamp_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("minifinancier.proto", :syntax => :proto3) do
-    add_message "minifinancier.ChargeRequest" do
-      optional :user_id, :uint64, 1
-      optional :amount, :uint32, 2
-    end
     add_message "minifinancier.Payment" do
       optional :id, :string, 1
       optional :user_id, :uint64, 2
       optional :amount, :uint32, 3
       optional :create_time, :message, 4, "google.protobuf.Timestamp"
+      optional :refund_time, :message, 5, "google.protobuf.Timestamp"
+    end
+    add_message "minifinancier.ChargeRequest" do
+      optional :user_id, :uint64, 1
+      optional :amount, :uint32, 2
+    end
+    add_message "minifinancier.RefundRequest" do
+      optional :payment_id, :string, 1
+    end
+    add_message "minifinancier.HealthCheckRequest" do
+    end
+    add_message "minifinancier.Health" do
+      optional :status, :enum, 1, "minifinancier.Health.ServingStatus"
+    end
+    add_enum "minifinancier.Health.ServingStatus" do
+      value :UNKNOWN, 0
+      value :SERVING, 1
+      value :NOT_SERVING, 2
+      value :SERVICE_UNKNOWN, 3
     end
   end
 end
 
 module Minifinancier
-  ChargeRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("minifinancier.ChargeRequest").msgclass
   Payment = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("minifinancier.Payment").msgclass
+  ChargeRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("minifinancier.ChargeRequest").msgclass
+  RefundRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("minifinancier.RefundRequest").msgclass
+  HealthCheckRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("minifinancier.HealthCheckRequest").msgclass
+  Health = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("minifinancier.Health").msgclass
+  Health::ServingStatus = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("minifinancier.Health.ServingStatus").enummodule
 end
