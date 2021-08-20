@@ -7,5 +7,9 @@ module Types
 
     field :name, String, 'ユーザー名', null: false
     field :pickup_location, PickupLocationType, 'デフォルトの受け取り場所', null: true
+
+    def pickup_location
+      Loaders::AssociationLoader.for(User, :pickup_location).load(object)
+    end
   end
 end
