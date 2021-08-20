@@ -7,6 +7,22 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
+    field :order, OrderType, 'ID でリクエストしたユーザー自身の注文を引く', null: true do
+      argument :id, ID, required: true, loads: OrderType, as: :order
+    end
+    def order(order:)
+      order
+    end
+
+    field :orders, [OrderType], 'リクエストしたユーザー自身のこれまでの注文を返す', null: false
+    def orders
+      if context[:current_user]
+        context[:current_user].paid_orders
+      else
+        []
+      end
+    end
+
     field :pickup_locations, [Types::PickupLocationType], 'すべての受け取り場所を返す', null: false
     def pickup_locations
       PickupLocation.all

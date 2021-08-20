@@ -12,6 +12,10 @@ module Types
     field :ordered_at, GraphQL::Types::ISO8601DateTime, '注文確定日時', null: false
     field :delivery_date, GraphQL::Types::ISO8601DateTime, '受け取り場所への配達日時', null: false
 
+    def self.authorized?(object, context)
+      super && context[:current_user]&.id == object.user_id
+    end
+
     def user
       Loaders::AssociationLoader.for(Order, :user).load(object)
     end

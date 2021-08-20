@@ -24,9 +24,11 @@ module Mutations
         OrderItem.new(product: item.product, quantity: item.quantity)
       end
 
-      order = Order.new(user: context[:current_user], pickup_location: pickup_location, order_items: order_items)
-      order.calculate_total_amount
-      order.save!
+      order = Order.create!(
+        user: context[:current_user],
+        pickup_location: pickup_location,
+        order_items: order_items,
+      )
 
       payment_id = charge!(user_id: context[:current_user].id, amount: order.total_amount)
 
