@@ -17,11 +17,18 @@ user = User.create!(
   pickup_location: pickup_location,
 )
 
+categories = Category.create!([
+  { name: '野菜' },
+  { name: 'お肉' },
+  { name: 'お魚' },
+])
+
 30.times do |i|
   Product.create!(
     name: "食材#{i + 1}",
     description: "とてもおいしい食材#{i + 1}",
     price: 50 * (i + 1),
     image_path: "/images/products/#{i + 1}.jpg",
+    categories: categories.sample(rand(2) + 1),
   )
 end

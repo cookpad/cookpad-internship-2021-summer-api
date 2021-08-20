@@ -1,3 +1,20 @@
+create_table :categories do |t|
+  t.string :name, null: false
+
+  t.timestamps
+
+  t.index :name, unique: true
+end
+
+create_table :categories_products do |t|
+  t.belongs_to :category, null: false, foreign_key: true, index: false
+  t.belongs_to :product, null: false, foreign_key: true
+
+  t.timestamps
+
+  t.index %i[category_id product_id], unique: true
+end
+
 create_table :order_items do |t|
   t.belongs_to :order, null: false, foreign_key: true
   t.belongs_to :product, null: false, foreign_key: true
