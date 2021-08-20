@@ -4,10 +4,19 @@ import {
   Server,
   ServerCredentials,
   ServerUnaryCall,
+  status,
 } from "@grpc/grpc-js";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
-import { ChargeRequest, Payment, HealthCheckRequest, Health } from "./minifinancier_pb";
+import {
+  ChargeRequest,
+  Health,
+  HealthCheckRequest,
+  Payment,
+  RefundRequest,
+} from "./minifinancier_pb";
 import { PaymentGatewayService } from "./minifinancier_grpc_pb";
+
+const paymentMap = new Map<string, Payment>();
 
 function charge(
   call: ServerUnaryCall<ChargeRequest, Payment>,
@@ -17,13 +26,33 @@ function charge(
     `charge requested: userId=${call.request.getUserId()} amount=${call.request.getAmount()}`
   );
 
-  const response = new Payment()
-    .setId(randomUUID())
+  const id = randomUUID();
+  const payment = new Payment()
+    .setId(id)
     .setUserId(call.request.getUserId())
     .setAmount(call.request.getAmount())
     .setCreateTime(Timestamp.fromDate(new Date()));
+  paymentMap.set(id, payment);
 
-  callback(null, response);
+  callback(null, payment);
+}
+
+function refund(
+  call: ServerUnaryCall<RefundRequest, Payment>,
+  callback: sendUnaryData<Payment>
+) {
+  console.log(`refund requested: paymentId=${call.request.getPaymentId()}`);
+
+  const payment = paymentMap.get(call.request.getPaymentId());
+  if (payment) {
+    payment.setRefundTime(Timestamp.fromDate(new Date()));
+    callback(null, payment);
+  } else {
+    callback({
+      code: status.NOT_FOUND,
+      message: `Payment not found for id=${call.request.getPaymentId()}`,
+    });
+  }
 }
 
 function checkHealth(
@@ -35,7 +64,7 @@ function checkHealth(
 }
 
 const server = new Server();
-server.addService(PaymentGatewayService, { charge, checkHealth });
+server.addService(PaymentGatewayService, { charge, refund, checkHealth });
 const port = process.env.PORT || 50051;
 server.bindAsync(
   `0.0.0.0:${port}`,

@@ -10,6 +10,7 @@ import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/t
 
 interface IPaymentGatewayService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     charge: IPaymentGatewayService_ICharge;
+    refund: IPaymentGatewayService_IRefund;
     checkHealth: IPaymentGatewayService_ICheckHealth;
 }
 
@@ -19,6 +20,15 @@ interface IPaymentGatewayService_ICharge extends grpc.MethodDefinition<minifinan
     responseStream: false;
     requestSerialize: grpc.serialize<minifinancier_pb.ChargeRequest>;
     requestDeserialize: grpc.deserialize<minifinancier_pb.ChargeRequest>;
+    responseSerialize: grpc.serialize<minifinancier_pb.Payment>;
+    responseDeserialize: grpc.deserialize<minifinancier_pb.Payment>;
+}
+interface IPaymentGatewayService_IRefund extends grpc.MethodDefinition<minifinancier_pb.RefundRequest, minifinancier_pb.Payment> {
+    path: "/minifinancier.PaymentGateway/Refund";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<minifinancier_pb.RefundRequest>;
+    requestDeserialize: grpc.deserialize<minifinancier_pb.RefundRequest>;
     responseSerialize: grpc.serialize<minifinancier_pb.Payment>;
     responseDeserialize: grpc.deserialize<minifinancier_pb.Payment>;
 }
@@ -36,6 +46,7 @@ export const PaymentGatewayService: IPaymentGatewayService;
 
 export interface IPaymentGatewayServer extends grpc.UntypedServiceImplementation {
     charge: grpc.handleUnaryCall<minifinancier_pb.ChargeRequest, minifinancier_pb.Payment>;
+    refund: grpc.handleUnaryCall<minifinancier_pb.RefundRequest, minifinancier_pb.Payment>;
     checkHealth: grpc.handleUnaryCall<minifinancier_pb.HealthCheckRequest, minifinancier_pb.Health>;
 }
 
@@ -43,6 +54,9 @@ export interface IPaymentGatewayClient {
     charge(request: minifinancier_pb.ChargeRequest, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Payment) => void): grpc.ClientUnaryCall;
     charge(request: minifinancier_pb.ChargeRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Payment) => void): grpc.ClientUnaryCall;
     charge(request: minifinancier_pb.ChargeRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Payment) => void): grpc.ClientUnaryCall;
+    refund(request: minifinancier_pb.RefundRequest, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Payment) => void): grpc.ClientUnaryCall;
+    refund(request: minifinancier_pb.RefundRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Payment) => void): grpc.ClientUnaryCall;
+    refund(request: minifinancier_pb.RefundRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Payment) => void): grpc.ClientUnaryCall;
     checkHealth(request: minifinancier_pb.HealthCheckRequest, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Health) => void): grpc.ClientUnaryCall;
     checkHealth(request: minifinancier_pb.HealthCheckRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Health) => void): grpc.ClientUnaryCall;
     checkHealth(request: minifinancier_pb.HealthCheckRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Health) => void): grpc.ClientUnaryCall;
@@ -53,6 +67,9 @@ export class PaymentGatewayClient extends grpc.Client implements IPaymentGateway
     public charge(request: minifinancier_pb.ChargeRequest, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Payment) => void): grpc.ClientUnaryCall;
     public charge(request: minifinancier_pb.ChargeRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Payment) => void): grpc.ClientUnaryCall;
     public charge(request: minifinancier_pb.ChargeRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Payment) => void): grpc.ClientUnaryCall;
+    public refund(request: minifinancier_pb.RefundRequest, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Payment) => void): grpc.ClientUnaryCall;
+    public refund(request: minifinancier_pb.RefundRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Payment) => void): grpc.ClientUnaryCall;
+    public refund(request: minifinancier_pb.RefundRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Payment) => void): grpc.ClientUnaryCall;
     public checkHealth(request: minifinancier_pb.HealthCheckRequest, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Health) => void): grpc.ClientUnaryCall;
     public checkHealth(request: minifinancier_pb.HealthCheckRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Health) => void): grpc.ClientUnaryCall;
     public checkHealth(request: minifinancier_pb.HealthCheckRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: minifinancier_pb.Health) => void): grpc.ClientUnaryCall;
