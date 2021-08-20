@@ -40,6 +40,13 @@ module Types
       Product.all
     end
 
+    field :search_products, [ProductType], 'ある文字列を商品名または説明に含む商品を検索する', null: false do
+      argument :query, String, '検索したい文字列', required: true
+    end
+    def search_products(query:)
+      Product.search(query)
+    end
+
     field :viewer, Types::UserType, 'リクエストしたユーザー自身を返す', null: true
     def viewer
       context[:current_user]
