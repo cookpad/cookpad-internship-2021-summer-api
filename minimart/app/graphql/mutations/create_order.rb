@@ -1,5 +1,3 @@
-require 'minifinancier_services_pb'
-
 module Mutations
   class CreateOrder < BaseMutation
     description '注文を確定する'
@@ -18,35 +16,31 @@ module Mutations
     end
 
     def resolve(items:, pickup_location: nil)
-      pickup_location ||= context[:current_user].pickup_location
-
-      order_items = items.map do |item|
-        OrderItem.new(product: item.product, quantity: item.quantity)
-      end
-
       order = Order.create!(
         user: context[:current_user],
-        pickup_location: pickup_location,
-        order_items: order_items,
+        pickup_location: pickup_location || context[:current_user].pickup_location,
+        order_items: items.map do |item|
+          OrderItem.new(product: item.product, quantity: item.quantity)
+        end,
       )
 
-      payment_id = charge!(user_id: context[:current_user].id, amount: order.total_amount)
+      payment = minifinancier_client.charge(
+        user_id: context[:current_user].id,
+        amount: order.total_amount,
+      )
 
-      order.fix!(minifinancier_payment_id: payment_id, time: Time.zone.now)
+      order.fix!(
+        minifinancier_payment_id: payment.id,
+        time: Time.zone.now,
+      )
 
       { order: order }
     end
 
     private
 
-    def charge!(user_id:, amount:)
-      payment_gateway_service = Minifinancier::PaymentGateway::Stub.new(
-        ENV.fetch('MINIFINANCIER_HOST', 'localhost:50051'),
-        ENV['ENABLE_GRPC_TLS'] ? GRPC::Core::ChannelCredentials.new : :this_channel_is_insecure,
-      )
-      request = Minifinancier::ChargeRequest.new(user_id: user_id, amount: amount)
-      payment = payment_gateway_service.charge(request)
-      payment.id
+    def minifinancier_client
+      Rails.configuration.x.minifinancier_client
     end
   end
 end
