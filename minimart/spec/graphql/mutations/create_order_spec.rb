@@ -72,7 +72,7 @@ RSpec.describe 'GraphQL mutation: createOrder(input: CreateOrderInput!)' do
       result = MinimartSchema.execute(query, context: context, variables: variables)
 
       expect(user.paid_orders).to be_empty
-      expect(result['errors']).to match([hash_including('message' => 'No PickupLocattion found')])
+      expect(result['errors']).to match([hash_including('message' => /validation failed/)])
     end
   end
 

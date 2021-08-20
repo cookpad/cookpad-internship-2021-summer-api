@@ -6,9 +6,15 @@ module Mutations
 
     argument :pickup_location_id, ID, 'デフォルトにしたい受け取り場所の ID', required: true, loads: Types::PickupLocationType
 
-    def resolve(pickup_location:)
-      raise GraphQL::ExecutionError, 'User name is required' if context[:current_user].nil?
+    def ready?(**args)
+      if context[:current_user]
+        true
+      else
+        raise GraphQL::ExecutionError, 'User name is required'
+      end
+    end
 
+    def resolve(pickup_location:)
       context[:current_user].update!(pickup_location: pickup_location)
       { pickup_location: pickup_location }
     end

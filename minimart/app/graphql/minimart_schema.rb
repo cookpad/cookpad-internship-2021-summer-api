@@ -8,6 +8,11 @@ class MinimartSchema < GraphQL::Schema
     raise GraphQL::ExecutionError, "#{field.type.unwrap.graphql_name} not found"
   end
 
+  rescue_from(ActiveRecord::RecordInvalid) do |err, obj, args, ctx, field|
+    raise GraphQL::ExecutionError,
+          "#{field.type.unwrap.graphql_name} validation failed: #{err.record.errors.full_messages.join(", ")}"
+  end
+
   # Union and Interface Resolution
   def self.resolve_type(abstract_type, obj, ctx)
     type_class_name = "#{obj.class.name}Type"

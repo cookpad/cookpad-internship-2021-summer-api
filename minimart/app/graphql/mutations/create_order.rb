@@ -9,11 +9,16 @@ module Mutations
     argument :items, [Types::OrderItemInput], '注文する商品とその個数のリスト', required: true, validates: { length: { minimum: 1 } }
     argument :pickup_location_id, ID, '注文した商品の届け先となる受け取り場所の ID', required: false, loads: Types::PickupLocationType
 
-    def resolve(items:, pickup_location: nil)
-      raise GraphQL::ExecutionError, 'User name is required' if context[:current_user].nil?
+    def ready?(**args)
+      if context[:current_user]
+        true
+      else
+        raise GraphQL::ExecutionError, 'User name is required'
+      end
+    end
 
+    def resolve(items:, pickup_location: nil)
       pickup_location ||= context[:current_user].pickup_location
-      raise GraphQL::ExecutionError, 'No PickupLocattion found' if pickup_location.nil?
 
       order_items = items.map do |item|
         OrderItem.new(product: item.product, quantity: item.quantity)
