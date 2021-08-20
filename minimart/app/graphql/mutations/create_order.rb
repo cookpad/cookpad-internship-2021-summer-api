@@ -2,10 +2,12 @@ require 'minifinancier_services_pb'
 
 module Mutations
   class CreateOrder < BaseMutation
-    field :order, Types::OrderType, null: true
+    description '注文を確定する'
 
-    argument :items, [Types::OrderItemInput], required: true, validates: { length: { minimum: 1 } }
-    argument :pickup_location_id, ID, required: false, loads: Types::PickupLocationType
+    field :order, Types::OrderType, '確定した注文', null: true
+
+    argument :items, [Types::OrderItemInput], '注文する商品とその個数のリスト', required: true, validates: { length: { minimum: 1 } }
+    argument :pickup_location_id, ID, '注文した商品の届け先となる受け取り場所の ID', required: false, loads: Types::PickupLocationType
 
     def resolve(items:, pickup_location: nil)
       raise GraphQL::ExecutionError, 'User name is required' if context[:current_user].nil?

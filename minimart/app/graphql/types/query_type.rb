@@ -7,26 +7,26 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    field :viewer, Types::UserType, null: true
-    def viewer
-      context[:current_user]
-    end
-
-    field :pickup_locations, [Types::PickupLocationType], null: false
+    field :pickup_locations, [Types::PickupLocationType], 'すべての受け取り場所を返す', null: false
     def pickup_locations
       PickupLocation.all
     end
 
-    field :products, [Types::ProductType], null: false
-    def products
-      Product.all
-    end
-
-    field :product, Types::ProductType, null: true do
+    field :product, Types::ProductType, 'ID で商品を引く', null: true do
       argument :id, ID, required: true, loads: Types::ProductType, as: :product
     end
     def product(product:)
       product
+    end
+
+    field :products, [Types::ProductType], 'すべての商品を返す', null: false
+    def products
+      Product.all
+    end
+
+    field :viewer, Types::UserType, 'リクエストしたユーザー自身を返す', null: true
+    def viewer
+      context[:current_user]
     end
   end
 end
