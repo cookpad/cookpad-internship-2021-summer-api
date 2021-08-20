@@ -1,4 +1,8 @@
 class Order < ApplicationRecord
+  Error = Class.new(StandardError)
+  AlreadyCanceledError = Class.new(Error)
+  NotCancelableError = Class.new(Error)
+
   belongs_to :user
   belongs_to :pickup_location
   has_many :order_items, dependent: :delete_all
@@ -13,6 +17,21 @@ class Order < ApplicationRecord
       ordered_at: time,
       delivery_date: 1.day.since(time).beginning_of_day + 12.hours,
     )
+  end
+
+  def cancel!(time:)
+    raise AlreadyCanceledError, 'Already canceled' if canceled?
+    raise NotCancelableError, 'Cancellation deadline exceeded' unless cancelable?(time: time)
+
+    update!(canceled_at: time)
+  end
+
+  def canceled?
+    !canceled_at.nil?
+  end
+
+  def cancelable?(time: Time.zone.now)
+    time <= ordered_at.end_of_day
   end
 
   private

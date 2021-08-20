@@ -11,6 +11,7 @@ module Types
     field :total_amount, Integer, '合計金額', null: false
     field :ordered_at, GraphQL::Types::ISO8601DateTime, '注文確定日時', null: false
     field :delivery_date, GraphQL::Types::ISO8601DateTime, '受け取り場所への配達日時', null: false
+    field :canceled_at, GraphQL::Types::ISO8601DateTime, '注文キャンセル日時', null: true
 
     def self.authorized?(object, context)
       super && context[:current_user]&.id == object.user_id

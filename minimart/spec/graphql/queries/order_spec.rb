@@ -21,6 +21,7 @@ RSpec.describe 'GraphQL query: order(id: ID!)' do
           totalAmount
           orderedAt
           deliveryDate
+          canceledAt
         }
       }
     GRAPHQL
@@ -63,6 +64,7 @@ RSpec.describe 'GraphQL query: order(id: ID!)' do
           totalAmount: Integer,
           orderedAt: '2021-08-18T12:34:56+09:00',
           deliveryDate: '2021-08-19T12:00:00+09:00',
+          canceledAt: nil,
         },
       },
     )
