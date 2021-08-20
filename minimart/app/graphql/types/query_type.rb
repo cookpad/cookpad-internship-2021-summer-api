@@ -8,29 +8,25 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :viewer, Types::UserType, null: true
-
     def viewer
       context[:current_user]
     end
 
     field :pickup_locations, [Types::PickupLocationType], null: false
-
     def pickup_locations
       PickupLocation.all
     end
 
     field :products, [Types::ProductType], null: false
-
     def products
       Product.all
     end
 
     field :product, Types::ProductType, null: true do
-      argument :id, ID, required: true
+      argument :id, ID, required: true, loads: Types::ProductType, as: :product
     end
-
-    def product(id:)
-      Product.find_by(id: id)
+    def product(product:)
+      product
     end
   end
 end

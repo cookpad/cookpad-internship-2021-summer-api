@@ -1,6 +1,8 @@
 module Types
   class ProductType < Types::BaseObject
-    field :id, ID, null: false
+    implements GraphQL::Types::Relay::Node
+    global_id_field :id
+
     field :name, String, null: false
     field :description, String, null: false
     field :price, Integer, null: false

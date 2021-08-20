@@ -1,6 +1,8 @@
 module Types
   class OrderType < Types::BaseObject
-    field :id, ID, null: false
+    implements GraphQL::Types::Relay::Node
+    global_id_field :id
+
     field :user, Types::UserType, null: false
     field :pickup_location, Types::PickupLocationType, null: false
     field :items, [Types::OrderItemType], null: false, method: :order_items

@@ -5,23 +5,16 @@ module Mutations
     field :order, Types::OrderType, null: true
 
     argument :items, [Types::OrderItemInput], required: true, validates: { length: { minimum: 1 } }
-    argument :pickup_location_id, ID, required: false
+    argument :pickup_location_id, ID, required: false, loads: Types::PickupLocationType
 
-    def resolve(items:, pickup_location_id: nil)
+    def resolve(items:, pickup_location: nil)
       raise GraphQL::ExecutionError, 'User name is required' if context[:current_user].nil?
 
-      pickup_location = if pickup_location_id
-                          PickupLocation.find_by(id: pickup_location_id)
-                        else
-                          context[:current_user].pickup_location
-                        end
+      pickup_location ||= context[:current_user].pickup_location
       raise GraphQL::ExecutionError, 'No PickupLocattion found' if pickup_location.nil?
 
       order_items = items.map do |item|
-        product = Product.find_by(id: item.product_id)
-        raise GraphQL::ExecutionError, "No Product found for id=#{item.product_id}" if product.nil?
-
-        OrderItem.new(product_id: item.product_id, quantity: item.quantity)
+        OrderItem.new(product: item.product, quantity: item.quantity)
       end
 
       order = Order.new(user: context[:current_user], pickup_location: pickup_location, order_items: order_items)
