@@ -2,6 +2,8 @@ class MinimartSchema < GraphQL::Schema
   mutation(Types::MutationType)
   query(Types::QueryType)
 
+  use GraphQL::Batch
+
   rescue_from(ActiveRecord::RecordNotFound) do |err, obj, args, ctx, field|
     raise GraphQL::ExecutionError, "#{field.type.unwrap.graphql_name} not found"
   end

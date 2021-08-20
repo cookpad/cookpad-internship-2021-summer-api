@@ -10,6 +10,7 @@ gem 'mysql2', '~> 0.5'
 gem 'rack-cors'
 
 gem 'graphql'
+gem 'graphql-batch'
 gem 'graphql_playground-rails'
 gem 'grpc'
 gem 'rack-timeout'
