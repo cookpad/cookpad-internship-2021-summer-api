@@ -9,7 +9,7 @@ module Types
     field :image_url, String, null: false
 
     def image_url
-      File.join(context[:image_base_url], object.image_path)
+      File.join(context[:image_base_url].to_s, object.image_path)
     end
   end
 end

@@ -3,6 +3,8 @@ class Order < ApplicationRecord
   belongs_to :pickup_location
   has_many :order_items, dependent: :delete_all
 
+  scope :paid, -> { where.not(ordered_at: nil) }
+
   def fix!(minifinancier_payment_id:, time:)
     update!(
       minifinancier_payment_id: minifinancier_payment_id,

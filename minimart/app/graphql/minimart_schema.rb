@@ -19,7 +19,7 @@ class MinimartSchema < GraphQL::Schema
   # Relay-style Object Identification:
 
   # Return a string UUID for `object`
-  def self.id_from_object(object, type_definition, query_ctx)
+  def self.id_from_object(object, type_definition, query_ctx = nil)
     # Here's a simple implementation which:
     # - joins the type name & object.id
     # - encodes it with base64:
