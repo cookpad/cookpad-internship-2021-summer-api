@@ -7,6 +7,18 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
+    field :categories, [CategoryType], 'すべての商品カテゴリを返す', null: false
+    def categories
+      Category.all
+    end
+
+    field :category, CategoryType, 'ID で商品カテゴリを引く', null: true do
+      argument :id, ID, required: true, loads: CategoryType, as: :category
+    end
+    def category(category:)
+      category
+    end
+
     field :order, OrderType, 'ID でリクエストしたユーザー自身の注文を引く', null: true do
       argument :id, ID, required: true, loads: OrderType, as: :order
     end
