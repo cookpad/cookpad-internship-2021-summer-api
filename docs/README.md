@@ -1,9 +1,10 @@
 # Cookpad Summer Internship 2021 Day 3: Web API
 
-1日目の Web フロントエンド、2日目の iOS アプリケーション開発で利用した minimart API を開発します。
+1日目の [Web フロントエンド](https://github.com/cookpad/minimart-web)、2日目の [iOS アプリケーション](https://github.com/cookpad/cookpad-internship-2021-summer-ios)開発で利用した minimart API を開発します。
 
-このリポジトリをフォークして基本課題・発展課題をできるところまで実装し、終了までに[プルリクエストを作成](https://docs.github.com/ja/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)してください。
-プルリクエストはタイトルを `課題提出（#{your_name}）` にして、[テンプレート](pull_request_template.md)に従って書いてください。
+## 講義資料
+
+https://speakerdeck.com/sankichi92/cookpad-summer-internship-2021-web-api
 
 ## 目次
 
